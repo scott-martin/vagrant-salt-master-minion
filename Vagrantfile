@@ -3,6 +3,8 @@ Vagrant.configure(2) do |config|
         master.vm.box = "ubuntu/trusty64"
         master.vm.network "private_network", ip: "192.168.33.10"
         master.vm.hostname = "master"
+        config.vm.synced_folder "salt/", "/srv/salt"
+        config.vm.synced_folder "pillar/", "/srv/pillar"
 
         master.vm.provision :salt do |salt|
             salt.install_master = true
