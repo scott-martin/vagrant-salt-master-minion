@@ -17,12 +17,26 @@ Vagrant.configure(2) do |config|
         minion.vm.box = "ubuntu/trusty64"
         minion.vm.network "private_network", ip: "192.168.33.11"
         minion.vm.hostname = "minion"
+        minion.vm.provider "virtualbox" do |v|
+            v.memory = 2048
+        end
 
         minion.vm.provision :salt do |salt|
             salt.install_master = false
             salt.minion_config = "./minion.conf"
             salt.minion_key = "./minion.pem"
             salt.minion_pub = "./minion.pub"
+        end
+    end
+
+    config.vm.define "salt-minion1" do |minion|
+        minion.vm.box = "ubuntu/trusty64"
+        minion.vm.network "private_network", ip: "192.168.33.12"
+        minion.vm.hostname = "minion1"
+
+        minion.vm.provision :salt do |salt|
+            salt.install_master = false
+            salt.minion_config = "./minion1.conf"
         end
     end
 end
